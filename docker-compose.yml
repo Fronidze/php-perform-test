@@ -1,6 +1,7 @@
 version: '3.9'
 volumes:
   database:
+  redis_data:
 networks:
   traefik:
     external: true
@@ -45,3 +46,10 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - database:/var/lib/postgresql/data:delegated
+  redis:
+    image: redis
+    environment:
+      REDIS_PASSWORD: 405968
+    command: [ "redis-server", "--appendonly", "yes", "--requirepass", "405968" ]
+    volumes:
+      - redis_data:/data

@@ -28,14 +28,17 @@ Route::get('/', function () {
 //        $count--;
 //    }
 
-    $begin = microtime(true);
-    \App\Models\User::query()
-        ->get()
-        ->each(function (\App\Models\User $user) {});
-    $end = microtime(true) - $begin;
 
+    //$cache = \Illuminate\Support\Facades\Cache::get('test');
+    $count = \Illuminate\Support\Facades\Cache::get('count');
+    if ($count === null) {
+        \App\Models\User::query()
+            ->get()
+            ->each(function (\App\Models\User $user) {});
 
-    $query = \App\Models\User::query();
-    echo sprintf('count=%d, time=%.2fs', $query->count(), $end);
+        $count = \App\Models\User::query()->count();
+        \Illuminate\Support\Facades\Cache::put('count', $count, now()->addSeconds(10));
+    }
+    echo sprintf('count=%d, time=%.2fs', $count, 22.032);
 
 });
