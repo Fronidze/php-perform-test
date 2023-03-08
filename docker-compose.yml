@@ -10,9 +10,9 @@ services:
       context: .
       dockerfile: .docker/php/Dockerfile
     volumes:
-      - ${PWD}/.docker/php/php.ini:/usr/local/etc/php/php.ini:delegated
-      - ${PWD}/.docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:delegated
-      - ${PWD}/app:/app:delegated
+      - ./.docker/php/php.ini:/usr/local/etc/php/php.ini:delegated
+      - ./.docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:delegated
+      - ./app:/app:delegated
   nginx:
     image: fronidze.nginx:latest
     container_name: fronidze.nginx
@@ -22,17 +22,15 @@ services:
     networks:
       - traefik
       - default
-    ports:
-      - "1111:80"
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.http.routers.sales.rule=Host(`simapple.ru`)"
-#      - "traefik.http.routers.sales.entryPoints=http"
-#      - "traefik.http.services.sales.loadBalancer.server.port=80"
-#      - "traefik.http.routers.sales.middlewares=redirectToHttps"
-#      - "traefik.http.middlewares.redirectToHttps.redirectScheme.scheme=https"
-#      - "traefik.http.middlewares.redirectToHttps.redirectScheme.permanent=true"
-#      - "traefik.http.routers.sslSales.rule=Host(`simapple.ru`)"
-#      - "traefik.http.routers.sslSales.entryPoints=https"
-#      - "traefik.http.routers.sslSales.tls=true"
-#      - "traefik.http.routers.sslSales.tls.certResolver=letsEncrypt"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sales.rule=Host(`simapple.ru`)"
+      - "traefik.http.routers.sales.entryPoints=http"
+      - "traefik.http.services.sales.loadBalancer.server.port=80"
+      - "traefik.http.routers.sales.middlewares=redirectToHttps"
+      - "traefik.http.middlewares.redirectToHttps.redirectScheme.scheme=https"
+      - "traefik.http.middlewares.redirectToHttps.redirectScheme.permanent=true"
+      - "traefik.http.routers.sslSales.rule=Host(`simapple.ru`)"
+      - "traefik.http.routers.sslSales.entryPoints=https"
+      - "traefik.http.routers.sslSales.tls=true"
+      - "traefik.http.routers.sslSales.tls.certResolver=letsEncrypt"
