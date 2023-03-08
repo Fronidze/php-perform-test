@@ -1,4 +1,6 @@
 version: '3.9'
+volumes:
+  database:
 networks:
   traefik:
     external: true
@@ -34,3 +36,12 @@ services:
       - "traefik.http.routers.sslSales.entryPoints=https"
       - "traefik.http.routers.sslSales.tls=true"
       - "traefik.http.routers.sslSales.tls.certResolver=letsEncrypt"
+  database:
+    image: postgres:14.4-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: main
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - database:/var/lib/postgresql/data:delegated
