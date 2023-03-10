@@ -12,6 +12,7 @@ services:
     build:
       context: .
       dockerfile: .docker/php/Dockerfile
+    privileged: true
     volumes:
       - ./.docker/php/php.ini:/usr/local/etc/php/php.ini
       - ./.docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
