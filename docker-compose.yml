@@ -13,10 +13,10 @@ services:
       context: .
       dockerfile: .docker/php/Dockerfile
     volumes:
-      - ./.docker/php/php.ini:/usr/local/etc/php/php.ini:delegated
-      - ./.docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf:delegated
-      - ./.docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:delegated
-      - ./app:/app:delegated
+      - ./.docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./.docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./.docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./app:/app
   nginx:
     image: fronidze.nginx:latest
     container_name: fronidze.nginx
@@ -46,7 +46,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - database:/var/lib/postgresql/data:delegated
+      - database:/var/lib/postgresql/data
   redis:
     image: redis
     environment:
