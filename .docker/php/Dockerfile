@@ -17,4 +17,7 @@ RUN pecl install redis \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
-COPY /app /app
+COPY ./.docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./.docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY ./.docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./app /app
